@@ -1,0 +1,28 @@
+Index: src/com/example/Tamagochi/Animation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/com/example/Tamagochi/Animation.java b/src/com/example/Tamagochi/Animation.java
+--- a/src/com/example/Tamagochi/Animation.java	
++++ b/src/com/example/Tamagochi/Animation.java	(date 1727163244094)
+@@ -1,8 +1,10 @@
+ package com.example.Tamagochi;
+ import javax.swing.*;
++import java.awt.*;
+ import java.awt.event.ActionEvent;
+ import java.awt.event.ActionListener;
+ 
++
+ public class Animation {
+     private ImageIcon[] frames;
+     private JLabel label;
+@@ -14,7 +16,7 @@
+         for (int i = 0; i < frames.length; i++) {
+             this.frames[i] = new ImageIcon(frames[i].getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+         }
+-        this.label = new JLabel(this.frames[0]); // Initialisiere das JLabel mit dem ersten Frame
++        this.label = new JLabel(this.frames[0]);
+         this.timer = new Timer(delay, new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
