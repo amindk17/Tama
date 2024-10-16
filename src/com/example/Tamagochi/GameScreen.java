@@ -351,7 +351,6 @@ public class GameScreen extends JPanel {
     }
 
     void resumeAllTimersAndAnimations() {
-        tamagochi = new Tamagochi();
         if (workTimer != null) {
             workTimer.start();
         }
@@ -364,7 +363,7 @@ public class GameScreen extends JPanel {
     }
 
     private void startWakeUpAnimation() {
-        tamagochi = new Tamagochi();
+
         stopAllAnimations();
         animationLabel.setIcon(mainAnimation.getLabel().getIcon());
         mainAnimation.startAnimation();
@@ -647,7 +646,7 @@ public class GameScreen extends JPanel {
         stopDecreaseStatsTimer();
         stopDailyDecreaseTimer();
 
-        tamagochi = new Tamagochi();
+        tamagochi.restart();
 
         updateProgressBars();
         startMainAnimation();

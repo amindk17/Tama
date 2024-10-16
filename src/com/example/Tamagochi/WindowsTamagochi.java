@@ -10,9 +10,10 @@ import java.awt.event.ActionListener;
 public class WindowsTamagochi {
     JFrame frame;
     JPanel mainPanel;
-    Tamagochi tamagochi;
+
     CardLayout cardLayout;
     GameScreen gameScreen;
+    Tamagochi tamagochi;
     NameScreen nameScreen;
     private boolean isContinuing;
 
@@ -38,7 +39,7 @@ public class WindowsTamagochi {
 
         frame.add(mainPanel);
         frame.setVisible(true);
-
+        tamagochi.setGameScreen(gameScreen);
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -112,6 +113,7 @@ public class WindowsTamagochi {
                 mainPanel.add(nameScreen, "NameScreen");
                 gameScreen = new GameScreen(WindowsTamagochi.this);
                 mainPanel.add(gameScreen, "GameScreen");
+                tamagochi.setGameScreen(gameScreen);
                 showNameScreen();
                 dialog.dispose();
             }

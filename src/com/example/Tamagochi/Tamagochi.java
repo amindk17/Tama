@@ -40,6 +40,23 @@ public class Tamagochi implements Serializable {
         this.experienceUpdatedToday = false;
     }
 
+    public void restart(){
+        this.generation = 1;
+        this.experience = 0;
+        this.motivation = 100;
+        this.caffeine = 100;
+        this.mood = 100;
+        this.hygiene = 100;
+        this.sleeping = false;
+        this.hasWokenUpToday = false;
+        this.experienceUpdatedToday = false;
+    }
+
+
+    public void setGameScreen(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
+    }
+
     public void saveGameState() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("savefile.dat"))) {
             oos.writeObject(this);
@@ -48,14 +65,19 @@ public class Tamagochi implements Serializable {
         }
     }
 
-    public static Tamagochi loadGameState() {
+    public static Tamagochi loadGameState(GameScreen newGameScreen) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("savefile.dat"))) {
-            return (Tamagochi) ois.readObject();
+            Tamagochi tamagochi = (Tamagochi) ois.readObject();
+            tamagochi.setGameScreen(newGameScreen); // Set the GameScreen after deserialization
+            return tamagochi;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            return new Tamagochi();
+            Tamagochi tamagochi = new Tamagochi();
+            tamagochi.setGameScreen(newGameScreen);
+            return tamagochi;
         }
     }
+
 
     public boolean isAwake() {
         return isAwake;
@@ -70,7 +92,13 @@ public class Tamagochi implements Serializable {
     }
 
     public void arbeiten() {
-        gameScreen = new GameScreen();
+        if (gameScreen==null){
+            System.out.println("----------");
+            StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+            for (StackTraceElement element : stackTraceElements) {
+                System.out.println(element);
+            }
+        }
         gameScreen.resumeAllTimersAndAnimations();
         if (!sleeping) {
             decreaseStats();
@@ -114,7 +142,6 @@ public class Tamagochi implements Serializable {
     }
 
     public void schlafen() {
-        gameScreen = new GameScreen();
         sleeping = true;
         System.out.println("Tamagochi schläft");
         gameScreen.pauseAllTimersAndAnimations();
